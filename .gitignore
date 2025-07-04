@@ -1,0 +1,21 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+
+# Environment
+.env
+env/
+venv/
+
+# Django migrations
+**/migrations/
+db.sqlite3
+
+# OS files
+.DS_Store
+
+# VSCode settings
+.vscode/
+
+# MySQL dumps
+*.sql
