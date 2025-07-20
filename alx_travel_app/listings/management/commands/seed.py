@@ -13,17 +13,14 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.stdout.write("Seeding listings...")
 
-        host = User.objects.filter(role='host').first()
-        if not host:
-            host = User.objects.create_user(
+        host, _ = User.objects.get_or_create(
                 email='host@example.com',
                 password='password123',
                 first_name='Host',
                 last_name='User',
-                role='host'
             )
-            self.stdout.write("Created sample host user.")
-
+        self.stdout.write("Created sample host user.")
+            
         for _ in range(10):
             Listing.objects.create(
                 host=host,
