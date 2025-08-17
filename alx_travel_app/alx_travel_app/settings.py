@@ -18,8 +18,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-print("DB_USER from .env:", env('DB_USER', default='NOT_FOUND'))
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -158,6 +156,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
 
 
 # Static files (CSS, JavaScript, Images)
