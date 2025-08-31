@@ -10,14 +10,20 @@ import requests
 import os
 from celery import shared_task
 from django.core.mail import send_mail
+from .tasks import send_booking_confirmation_email
 
 class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
-
+    
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+
+    def perform_create(self, serializer):
+        booking = serializer.save()
+        # Trigger the Celery email task asynchronously
+        send_booking_confirmation_email.delay(booking.customer_email, booking.id)
 
 @api_view(['POST'])
 def initiate_payment(request, booking_id):
